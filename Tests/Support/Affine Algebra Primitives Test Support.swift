@@ -1,5 +1,5 @@
-// Algebra Affine Primitives Test Support
+// Affine Algebra Primitives Test Support
 
-public import Algebra_Affine_Primitives
+internal import Affine_Algebra_Primitives
 
 // Affine.Discrete.Vector already has ExpressibleByIntegerLiteral in the main module.

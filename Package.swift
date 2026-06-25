@@ -1,9 +1,9 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.3.1
 
 import PackageDescription
 
 let package = Package(
-    name: "swift-algebra-affine-primitives",
+    name: "swift-affine-algebra-primitives",
     platforms: [
         .macOS(.v26),
         .iOS(.v26),
@@ -13,38 +13,38 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Algebra Affine Primitives",
-            targets: ["Algebra Affine Primitives"]
+            name: "Affine Algebra Primitives",
+            targets: ["Affine Algebra Primitives"]
         ),
         .library(
-            name: "Algebra Affine Primitives Test Support",
-            targets: ["Algebra Affine Primitives Test Support"]
+            name: "Affine Algebra Primitives Test Support",
+            targets: ["Affine Algebra Primitives Test Support"]
         ),
     ],
     dependencies: [
-        .package(path: "../swift-algebra-group-primitives"),
-        .package(path: "../swift-affine-primitives"),
+        .package(url: "https://github.com/swift-primitives/swift-algebra-primitives.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-affine-primitives.git", branch: "main"),
     ],
     targets: [
         .target(
-            name: "Algebra Affine Primitives",
+            name: "Affine Algebra Primitives",
             dependencies: [
-                .product(name: "Algebra Group Primitives", package: "swift-algebra-group-primitives"),
+                .product(name: "Algebra Group Primitives", package: "swift-algebra-primitives"),
                 .product(name: "Affine Primitives", package: "swift-affine-primitives"),
             ]
         ),
         .target(
-            name: "Algebra Affine Primitives Test Support",
+            name: "Affine Algebra Primitives Test Support",
             dependencies: [
-                "Algebra Affine Primitives",
+                "Affine Algebra Primitives",
             ],
             path: "Tests/Support"
         ),
         .testTarget(
-            name: "Algebra Affine Primitives Tests",
+            name: "Affine Algebra Primitives Tests",
             dependencies: [
-                "Algebra Affine Primitives",
-                "Algebra Affine Primitives Test Support",
+                "Affine Algebra Primitives",
+                "Affine Algebra Primitives Test Support",
             ]
         ),
     ],
@@ -52,12 +52,20 @@ let package = Package(
 )
 
 for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    let settings: [SwiftSetting] = [
+    let ecosystem: [SwiftSetting] = [
+        .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
         .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+        .enableExperimentalFeature("LifetimeDependence"),
         .enableExperimentalFeature("Lifetimes"),
-        .strictMemorySafety()
+        .enableExperimentalFeature("SuppressedAssociatedTypes"),
+        .enableUpcomingFeature("InferIsolatedConformances"),
+        .enableUpcomingFeature("LifetimeDependence"),
     ]
-    target.swiftSettings = (target.swiftSettings ?? []) + settings
+
+    let package: [SwiftSetting] = []
+
+    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
 }

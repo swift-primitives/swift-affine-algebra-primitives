@@ -1,6 +1,5 @@
+import Affine_Algebra_Primitives
 import Testing
-
-import Algebra_Affine_Primitives
 
 @Suite("Affine.Discrete.Vector.Group Tests")
 struct AffineDiscreteVectorGroupTests {
