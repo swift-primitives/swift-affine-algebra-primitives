@@ -1,12 +1,14 @@
 import Affine_Algebra_Primitives
 import Testing
 
-@Suite("Affine.Discrete.Vector.Group Tests")
-struct AffineDiscreteVectorGroupTests {
-    @Suite struct Unit {}
+extension Affine.Discrete.Vector {
+    @Suite("Affine.Discrete.Vector.Group Tests")
+    struct Test {
+        @Suite struct Unit {}
+    }
 }
 
-extension AffineDiscreteVectorGroupTests.Unit {
+extension Affine.Discrete.Vector.Test.Unit {
     @Test
     func `identity is zero`() {
         let group = Affine.Discrete.Vector.group
